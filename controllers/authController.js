@@ -1,4 +1,4 @@
-import {User} from "../models/user.js";
+import {User} from "../models/user_model.js";
 import { generateToken } from "../utils/tokenHelper.js";
 
 export const register = async(req, res, next) => {
@@ -8,7 +8,11 @@ export const register = async(req, res, next) => {
     const userExists = await User.findOne({ email });
     if(userExists) return res.status(400).json({ message: "User already exists" });
     
-    const user = await User.create({ username, email, password});
+    const user = await User.create({ 
+      username, 
+      email, 
+      password,
+    });
     res.status(201).json({
         success: true,
         id: user._id,
@@ -60,5 +64,14 @@ export const getUser = async(req, res, next) => {
 
   } catch (e) {
     next(e);
+  }
+};
+
+export const getOtherUsers = async(req, res, next) => {
+  try {
+    const otherUsers = await User.find({_id:{$ne:req.user.id}}).select("-password");
+    res.status(200).json(otherUsers);
+  } catch (error) {
+    next(error);
   }
 };

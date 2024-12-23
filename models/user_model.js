@@ -10,12 +10,6 @@ const schema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-       /* validate: {
-            validator: () => {
-                return /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test();
-            },
-            message: props => `${props.value} is not a valid email!`
-        } */
     },
     password: {
         type: String,
